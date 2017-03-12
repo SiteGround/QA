@@ -1,0 +1,125 @@
+<html>
+<head>
+<style>
+#grid td {
+	width: 10px;
+	height: 10px;
+	background-color: #222;
+}
+</style>
+<script src="jquery-3.1.1.min.js"></script>
+<script src="figures.js"></script>
+<script>
+var colors = {
+	'triangle': '#f4f',
+	'circle': '#f00',
+	'rectangle': '#05f',
+	'smile': '#ff4',
+	'sad': '#07f'
+}
+
+function draw_all() {
+	var one = $('#first').val();
+	var two = $('#second').val();
+	var three = $('#third').val();
+	if (one == 'triangle' && two == 'circle' && three == 'rectangle') {
+		draw(figures.smile, colors.smile);
+		setTimeout(draw, 2000, figures.triangle, colors.triangle);
+		setTimeout(draw, 4000, figures.circle, colors.circle);
+		setTimeout(draw, 6000, figures.rectangle, colors.rectangle);
+		setTimeout(draw, 8000, figures.smile, colors.smile);
+	} else {
+		draw(figures.sad, colors.sad);
+		setTimeout(draw, 2000, figures[one], colors[one]);
+		setTimeout(draw, 4000, figures[two], colors[two]);
+		setTimeout(draw, 6000, figures[three], colors[three]);
+		setTimeout(draw, 8000, figures.sad, colors.sad);
+	}
+}
+
+function clear() {
+	for (var l=0; l<20; l++) {
+		for (var i=0; i<20; i++) {
+			$("#grid tr:eq(" + l + ") td:eq(" + i + ")").css("background-color", "#222");
+		}
+	}
+}
+
+function draw(obj, color) {
+	clear();
+	for (var l=0; l<obj.length; l++) {
+		for (var i=0; i<obj[l].length; i++) {
+			if (obj[l][i])
+				$("#grid tr:eq(" + l + ") td:eq(" + i + ")").css("background-color", color);
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<table align=center>
+<tr>
+<td colspan=2 align=center><img src='sg-logo.png' width=280></td>
+</tr><tr>
+<td>
+<table id='grid'>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+</td>
+<td>
+	<svg height=44 width=44><polygon points='42,42 22,0 0,42' style='fill:#f4f;stroke:black;stroke-width:2' /></svg><br /> 
+	<svg height=44 width=44><polyline fill="none" stroke="#000" stroke-width=3 stroke-linecap="round" stroke-linejoin="round" points="6,18 22,32 38,18 "/></svg><br />
+	<svg height=44 width=44><circle cx=22 cy=22 r=20 stroke='black' stroke-width=2 fill='red' /></svg><br />
+	<svg height=44 width=44><polyline fill="none" stroke="#000" stroke-width=3 stroke-linecap="round" stroke-linejoin="round" points="6,18 22,32 38,18 "/></svg><br />
+	<svg height=44 width=44><rect x=2 y=2 width=40 height=40 style='fill:#06f;stroke-width:2;stroke:#000' /></svg><br />
+</td>
+</tr><tr>
+<td colspan=2>
+<form>
+<b>Find the Bug</b><br />
+Choose the correct order:<br />
+1. <select id='first'>
+	<option value='circle' selected>Circle</option>
+	<option value='rectangle'>Triangle</option>
+	<option value='triangle'>Rectangle</option>
+</select><br />
+
+2. <select id='second'>
+	<option value='triangle' selected>Circle</option>
+	<option value='circle'>Triangle</option>
+	<option value='rectangle'>Rectangle</option>
+</select><br />
+
+3. <select id='third'>
+	<option value='rectangle' selected>Circle</option>
+	<option value='triangle'>Triangle</option>
+	<option value='circle'>Rectangle</option>
+</select><br />
+<br />
+<input type='button' name='submit' value='Submit' onClick='javascript:draw_all()'>
+</form>
+</td>
+</tr>
+</table>
+</body>
+</html>
