@@ -35,6 +35,12 @@ function draw_all() {
 		setTimeout(draw, 6000, figures[three], colors[three]);
 		setTimeout(draw, 8000, figures.sad, colors.sad);
 	}
+	setTimeout(draw, 9000, figures.nums, colors.smile);
+	$.ajax({
+		url: "/api.php",
+		type: "POST",
+		data: { result: JSON.stringify([ one, two, three ]) }
+	});
 }
 
 function clear() {
@@ -119,6 +125,9 @@ Choose the correct order:<br />
 <input type='button' name='submit' value='Submit' onClick='javascript:draw_all()'>
 </form>
 </td>
+</tr>
+<tr>
+<td colspan=2>Full source of this project<br />can be found at <a href='https://github.com/SiteGround/QA-Challenge'>our GitHub repo</a>.</td>
 </tr>
 </table>
 </body>
