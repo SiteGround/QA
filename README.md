@@ -9,6 +9,6 @@ The code is separated in three parts:
 
 We have used WS2812 RGB LEDs, Raspberry Pi 1 and [rpi_ws281x library](https://github.com/jgarff/rpi_ws281x)
 
-The RGB LED board was fabricated and solderd by Ivan Dinkov.
+The RGB LED board was fabricated and solderd by [Ivan Dinkov](https://github.com/idinkovsg).
 
-The software(and the bugs introdcuded in it) was written by Marian Marinov.
+The software(and the bugs introdcuded in it) was written by [Marian Marinov](https://github.com/hackman).
