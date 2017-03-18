@@ -17,17 +17,25 @@ var colors = {
 	'smile': '#ff4',
 	'sad': '#07f'
 }
+var google_form = 'https://docs.google.com/forms/d/e/1FAIpQLSdxg0XOEq67AlACuo85h3rvW37MMH-Na86AWg84rCb2QRmFwQ/viewform?usp=sf_link';
+
+function go_to_googleform() {
+	$( location ).attr("href", google_form );
+}
 
 function draw_all() {
 	var one = $('#first').val();
 	var two = $('#second').val();
 	var three = $('#third').val();
 	if (one == 'triangle' && two == 'circle' && three == 'rectangle') {
+		$('#formichka').html('<br /><br /><a href="' + google_form +'">REGISTER HERE</a><br />');
+		$('#github').html('');
 		draw(figures.smile, colors.smile);
 		setTimeout(draw, 2000, figures.triangle, colors.triangle);
 		setTimeout(draw, 4000, figures.circle, colors.circle);
 		setTimeout(draw, 6000, figures.rectangle, colors.rectangle);
 		setTimeout(draw, 8000, figures.smile, colors.smile);
+		setTimeout(go_to_googleform, 9000);
 	} else {
 		draw(figures.sad, colors.sad);
 		setTimeout(draw, 2000, figures[one], colors[one]);
@@ -35,7 +43,6 @@ function draw_all() {
 		setTimeout(draw, 6000, figures[three], colors[three]);
 		setTimeout(draw, 8000, figures.sad, colors.sad);
 	}
-	setTimeout(draw, 9000, figures.nums, colors.smile);
 	$.ajax({
 		url: "/api.php",
 		type: "POST",
@@ -60,6 +67,15 @@ function draw(obj, color) {
 		}
 	}
 }
+
+$( document ).ready(function() {
+	$.ajax({
+		url: "/api.php",
+		async: false,
+		type: "GET",
+	});
+});
+
 </script>
 </head>
 
@@ -100,7 +116,7 @@ function draw(obj, color) {
 	<svg height=44 width=44><rect x=2 y=2 width=40 height=40 style='fill:#06f;stroke-width:2;stroke:#000' /></svg><br />
 </td>
 </tr><tr>
-<td colspan=2>
+<td colspan=2 id='formichka'>
 <form>
 <b>Find the Bug</b><br />
 Choose the correct order:<br />
@@ -127,7 +143,7 @@ Choose the correct order:<br />
 </td>
 </tr>
 <tr>
-<td colspan=2>Full source of this project<br />can be found at <a href='https://github.com/SiteGround/QA-Challenge'>our GitHub repo</a>.</td>
+<td colspan=2 id='github'>Full source of this project<br />can be found at <a href='https://github.com/SiteGround/QA-Challenge'>our GitHub repo</a>.</td>
 </tr>
 </table>
 </body>
