@@ -1,0 +1,155 @@
+<html>
+<head>
+<style>
+#grid td {
+	width: 10px;
+	height: 10px;
+	background-color: #222;
+}
+</style>
+<script src="jquery-3.1.1.min.js"></script>
+<script src="figures.js"></script>
+<script>
+var colors = {
+	'triangle': '#f4f',
+	'circle': '#f00',
+	'rectangle': '#05f',
+	'smile': '#ff4',
+	'sad': '#07f'
+}
+
+function draw_all() {
+	var one = $('#first').val();
+	var two = $('#second').val();
+	var three = $('#third').val();
+	if (one == 'triangle' && two == 'circle' && three == 'rectangle') {
+		draw(figures.smile, colors.smile);
+		setTimeout(draw, 2000, figures.triangle, colors.triangle);
+		setTimeout(draw, 4000, figures.circle, colors.circle);
+		setTimeout(draw, 6000, figures.rectangle, colors.rectangle);
+		setTimeout(draw, 8000, figures.smile, colors.smile);
+	} else {
+		draw(figures.sad, colors.sad);
+		setTimeout(draw, 2000, figures[one], colors[one]);
+		setTimeout(draw, 4000, figures[two], colors[two]);
+		setTimeout(draw, 6000, figures[three], colors[three]);
+		setTimeout(draw, 8000, figures.sad, colors.sad);
+	}
+	setTimeout(draw, 9000, figures.nums, colors.smile);
+	$.ajax({
+		url: "/api.php",
+		type: "POST",
+		data: { result: JSON.stringify([ one, two, three ]) }
+	});
+}
+
+function clear() {
+	for (var l=0; l<20; l++) {
+		for (var i=0; i<20; i++) {
+			$("#grid tr:eq(" + l + ") td:eq(" + i + ")").css("background-color", "#222");
+		}
+	}
+}
+
+function draw(obj, color) {
+	clear();
+	for (var l=0; l<obj.length; l++) {
+		for (var i=0; i<obj[l].length; i++) {
+			if (obj[l][i])
+				$("#grid tr:eq(" + l + ") td:eq(" + i + ")").css("background-color", color);
+		}
+	}
+}
+
+function get_solution() {
+	t = 0;
+	$.ajax({
+		dataType: "json",
+		url: "/api.php?get",
+		success: function( data ) {
+			len =  data.length;
+			if (len > 0) {
+				id = data.shift();
+				$('#solution').html('Displaying solution: ' + id);
+				for (var i=0; i<data.length; i++) {
+					if (t > 0) {
+						setTimeout(draw, t, data[i], colors[i]);
+					} else {
+						draw(data[i], colors[i]);
+					}
+					t += 2000;
+				}
+			} else {
+				draw(figures.sad, colors.sad);
+				setTimeout(draw, 2000, figures.circle, colors.circle);
+				setTimeout(draw, 4000, figures.triangle, colors.triangle);
+				setTimeout(draw, 6000, figures.rectangle, colors.rectangle);
+				setTimeout(draw, 8000, figures.sad, colors.sad);
+			}
+		}
+	});
+
+	setTimeout(get_solution, 10000);
+}
+
+$(function() {
+	get_solution();
+});
+</script>
+</head>
+
+<body>
+<table align=center>
+<tr>
+<td align=center>
+	<img src='sg-logo.png' width=280><br />
+	<br />
+	<br />
+	<b>Find the Bug<b><br />
+	<br />
+	<br />
+	Full source of this project<br />can be found at <a href='https://github.com/SiteGround/QA-Challenge'>our GitHub repo</a>.<br />
+	<br />
+	<b>You can play here: <br /><a href="http://qa.siteground.com">http://qa.siteground.com</a></b>
+</td>
+<td>
+<table id='grid'>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+</table>
+</td>
+<td>
+	<svg height=44 width=44><polygon points='42,42 22,0 0,42' style='fill:#f4f;stroke:black;stroke-width:2' /></svg><br /> 
+	<!-- arrow -->
+	<svg height=44 width=44><polyline fill="none" stroke="#000" stroke-width=3 stroke-linecap="round" stroke-linejoin="round" points="6,18 22,32 38,18 "/></svg><br />
+	<svg height=44 width=44><circle cx=22 cy=22 r=20 stroke='black' stroke-width=2 fill='red' /></svg><br />
+	<!-- arrow -->
+	<svg height=44 width=44><polyline fill="none" stroke="#000" stroke-width=3 stroke-linecap="round" stroke-linejoin="round" points="6,18 22,32 38,18 "/></svg><br />
+	<svg height=44 width=44><rect x=2 y=2 width=40 height=40 style='fill:#06f;stroke-width:2;stroke:#000' /></svg><br />
+</td>
+</tr>
+<tr>
+<td>
+<td id='solution' colspan=2>Displaying solution: </td>
+</tr>
+</table>
+</body>
+</html>
