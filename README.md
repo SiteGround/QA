@@ -2,6 +2,9 @@ This code is a simple QA challenge made for the [QA: challenge accepted 3.0 conf
 
 The idea was to create a 20x20 RGB LED board, which will be controlled via Raspberry Pi. On the R Pi we will run Nginx and a daemon that will draw different figures on the RGB LED board.
 
+Unfortunatelly I killed 360 of the LEDs just before the conferecen, so I decided to do almost the same, but with a TV.
+
+
 The code is separated in three parts:
 - web page which display what is on the board
 - PHP API, for transporting the results to the daemon
