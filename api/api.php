@@ -63,6 +63,8 @@ function get_last_solution() {
 	if ($status['msg_qnum']>0) {
 		msg_receive($q,12,$msgtype,200,$data,false,null,$err);
 		echo($data);
+	} else {
+		echo('[]');
 	}
 }
 
@@ -94,7 +96,6 @@ session_start();
 if (isset($_REQUEST['result'])) {
 	check_solution();
 } elseif (isset($_REQUEST['get'])) {
-	echo("get");
 	get_last_solution();
 } else {
 	# generate cookie and solution ID
