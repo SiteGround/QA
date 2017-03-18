@@ -1,6 +1,7 @@
 <?php
 $correct_order = array('triangle', 'circle', 'rectangle');
 $counter_file = '/home/qa/counter.txt';
+$solution_store = '/home/qa/solutions.txt';
 $srv_sock = 'unix:///tmp/table.sock';
 
 # Send the result to the LED matrix
@@ -15,8 +16,24 @@ function trigger_table($res) {
 	}
 }
 
+function save_solution($res) {
+	global $solution_store;
+	array_unshift($res, $_SESSION['QA_Count']);
+	$q = msg_get_queue(42);
+	if (!msg_send($q, 12, json_encode($res), false)) {
+		die('unable to save to MSG queue');
+	}
+}
+
 function check_solution() {
 	global $correct_order;
+	if (!isset($_SESSION['QA_Count'])) {
+		return;
+	}
+	if ($_SESSION['QA_Count'] != $_COOKIE['QA_Count']) {
+		echo("Invalid session!");
+		return;
+	}
 	# Get the JSON data
 	$result = json_decode($_REQUEST['result']);
 	if ($result === NULL) {
@@ -26,20 +43,27 @@ function check_solution() {
 
 	# Check if the result is correct and add the smiles
 	if (array_diff_assoc($result, $correct_order)) {
+		echo("Correct solution");
 		array_unshift($result, 'sad');
 		array_push($result, 'sad');
 	} else {
+		echo("Invalid solution");
 		array_unshift($result, 'smile');
 		array_push($result, 'smile');
 	}
 	
-	# Send the figures to the board
-	trigger_table($result);
+#	# Send the figures to the board
+#	trigger_table($result);
+	save_solution($result);
 }
 
-function check_cookie() {
-	# check the IP
-	
+function get_last_solution() {
+	$q = msg_get_queue(42);
+	$status=msg_stat_queue($q);
+	if ($status['msg_qnum']>0) {
+		msg_receive($q,12,$msgtype,200,$data,false,null,$err);
+		echo($data);
+	}
 }
 
 function prepare_request() {
@@ -61,14 +85,17 @@ function prepare_request() {
 	fwrite($f, $count);
 	fclose($f);
 	# set cookie with the counter, expire in 10min
-	setcookie("QA_Count", $count, time()+600, "/api.php", "qa.siteground.com", 0);
-
-	# seve in the session its IP and counter
+	setcookie('QA_Count', $count, time()+600, '/api.php', 'qa.siteground.com', 0);
+	$_SESSION['QA_Count'] =  $count;
 	
 }
 
-if (isset($_REQUEST['order'])) {
+session_start();
+if (isset($_REQUEST['result'])) {
 	check_solution();
+} elseif (isset($_REQUEST['get'])) {
+	echo("get");
+	get_last_solution();
 } else {
 	# generate cookie and solution ID
 	prepare_request();
